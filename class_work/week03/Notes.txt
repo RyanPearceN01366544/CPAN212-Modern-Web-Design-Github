@@ -1,0 +1,7 @@
+JUST IN CASE I SOMEHOW FORGET:
+
+npm init -y
+npm i express nodemon dotenv
+nodemon Index.js
+
+DON'T FORGET TO ADD "type":"module", AFTER "main" IN PACKAGE.JSON
