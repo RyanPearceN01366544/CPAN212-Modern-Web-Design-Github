@@ -17,9 +17,51 @@ router.get("/greeting", (req, res) => {
 });
 
 // Add
-router.get("/add", (req, res) => {});
+router.get("/add/:x/:y", (req, res) => {
+    let {x, y} = req.params;
+    res.send(`${x} + ${y} = ${parseInt(x) + parseInt(y)}`);
+});
 
 // Calculate
-router.get("/calculate", (req, res) => {});
+router.get("/calculate/:x/:o/:y", (req, res) => {
+    let x = parseFloat(req.params.x); // Value #1
+    let y = parseFloat(req.params.y); // Value #2
+    let operator = req.params.o; // My Operation.
+    if (operator == '*') {
+        operator = 'x'; // Just to make it look a bit more pleasing to the eye. Though '*' is obviously acceptable.
+    }
+    else if (operator == 'divide') {
+        operator = '/';
+    }
+
+    switch (operator)
+    {
+        case '+':
+            {
+                res.send(`${x} ${operator} ${y} = ${x + y}`);
+                break;
+            }
+        case '-':
+            {
+                res.send(`${x} ${operator} ${y} = ${x - y}`);
+                break;
+            }
+        case '/':
+            {
+                res.send(`${x} ${operator} ${y} = ${x / y}`);
+                break;
+            }
+        case 'x':
+            {
+                res.send(`${x} ${operator} ${y} = ${x * y}`);
+                break;
+            }
+        default:
+            {
+                res.send("Error: You have input an invalid operator.\nValid Inputs: '+', '-', '%2F', 'divide', '*' and 'x'");
+                break;
+            }
+    }
+});
 
 export default router;
