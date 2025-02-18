@@ -26,41 +26,49 @@ router.get("/add/:x/:y", (req, res) => {
 router.get("/calculate/:x/:o/:y", (req, res) => {
     let x = parseFloat(req.params.x); // Value #1
     let y = parseFloat(req.params.y); // Value #2
-    let operator = req.params.o; // My Operation.
-    if (operator == '*') {
-        operator = 'x'; // Just to make it look a bit more pleasing to the eye. Though '*' is obviously acceptable.
-    }
-    else if (operator == 'divide') {
-        operator = '/';
-    }
 
-    switch (operator)
-    {
-        case '+':
+    if (x !== NaN && y !== NaN) {
+        let operator = req.params.o; // My Operation.
+        
+        if (operator == '*') {
+            operator = 'x'; // Just to make it look a bit more pleasing to the eye. Though '*' is obviously acceptable.
+        }
+        else if (operator == 'divide') {
+            operator = '/';
+        }
+
+        switch (operator)
+        {
+            case '+':
             {
                 res.send(`${x} ${operator} ${y} = ${x + y}`);
                 break;
             }
-        case '-':
+            case '-':
             {
                 res.send(`${x} ${operator} ${y} = ${x - y}`);
                 break;
             }
-        case '/':
+            case '/':
             {
                 res.send(`${x} ${operator} ${y} = ${x / y}`);
                 break;
             }
-        case 'x':
+            case 'x':
             {
                 res.send(`${x} ${operator} ${y} = ${x * y}`);
                 break;
             }
-        default:
+            default:
             {
                 res.send("Error: You have input an invalid operator.\nValid Inputs: '+', '-', '%2F', 'divide', '*' and 'x'");
                 break;
             }
+        }
+    }
+    else
+    {
+        res.send("Error: You must have two numbers formatted like so: /calculate/{Number1}/{Operator}/{Number2}");
     }
 });
 
