@@ -1,3 +1,5 @@
 node_modules
 package-lock.json
 test*
+uploads
+!uploads/1738796560558null.png

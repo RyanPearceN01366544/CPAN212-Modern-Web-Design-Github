@@ -8,6 +8,7 @@ const App = () => {
 
   const [displayImage, setDisplayImage] = useState(null); // Display Images
   const [displayImages, setDisplayImages] = useState([]);
+  const [displayDogBlob, setDisplayDogBlob] = useState(null);
   const [displayDogImage, setDisplayDogImage] = useState(null);
 
   const [message, setMessage] = useState(""); // Message
@@ -129,27 +130,47 @@ const App = () => {
       console.log(err_);
     }
   };
-  // fetch functions -> save dog image [TODO]
-  const handleDogImage = async(e) => {
+  // fetch functions -> save dog image
+  const handleDogImage = async(imageURL) => {
+
+    try {
+      let formData = new FormData();
+      formData.append("file", displayDogBlob, "dogblob.jpg")
+      
+      const response = await fetch(`http://localhost:8000/save/single`, {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Dog Image upload failed");
+      }
+      setMessage("Dog File uploaded successfully!");
+    }
+    catch (err_){
+      console.error(err_);
+    }
     
   };
-  // fetch functions -> fetch dog image [TODO]
+  // fetch functions -> fetch dog image
   const fetchDogImage = async (e) => {
+    // fetch displayDogImage (https://dog.ceo/api/breeds/image/random)
+    // formdata
+    // formData.append("file", blob, ".jpg"); -> 6878234872354-blob.jpg
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8000/fetch/multiple"); // Getting the multiple images.
-      const data = await response.json(); // Getting the images locations in a json.
+      const responseJson = await fetch(`https://dog.ceo/api/breeds/image/random`);
+      const dataJson = await responseJson.json();
 
-      const filePromises = data.map(async(filename) => { // Map (basically a for loop) each filename.
-        const fetchFileNameData = await fetch(`http://localhost:8000/fetch/file/${filename}`); // Get the file.
-        const fileBlob = await fetchFileNameData.blob(); // Download via blob.
-        const imgUrl = URL.createObjectURL(fileBlob);
-        console.log(fileBlob);
-        console.log(imgUrl);
-        return imgUrl;
-      });
-      const imageUrls = await Promise.all(filePromises);
-      setDisplayImages(imageUrls);
+      const responseBlob = await fetch(dataJson.message);
+      const dataBlob = await responseBlob.blob(); // Make the Blob
+      setDisplayDogBlob(dataBlob);
+      const imageUrl = URL.createObjectURL(dataBlob); // Create a URL using the blob.
+      setDisplayDogImage(imageUrl); // Set the Dog Image as the URL.
+      console.log(dataBlob); // Make sure the blob worked!
+      console.log(imageUrl); // Make sure the URL is correct.
     }
     catch (err_){
       console.log(err_);
@@ -202,6 +223,20 @@ const App = () => {
         <input type="file" onChange={handleMultipleFilesChange} multiple/>
         <button type="submit">Upload Multiple Files</button>
       </form>
+      <h2>Fetch Dog File</h2>
+      <button onClick={fetchDogImage}>Fetch Dog Image</button>
+      {displayDogImage && (
+        <div>
+          <h1>Dog Image</h1>
+          <h4>Click on the image to download to server.</h4>
+          <img
+            src={displayDogImage}
+            alt="Display Dog Image"
+            style={{ width: "200px", marginTop: "10px" }}
+            onClick={() => handleDogImage(displayDogImage)}
+          />
+        </div>
+      )}
     </div>
   );
 };
