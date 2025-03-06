@@ -1,8 +1,12 @@
 {
-    "HeaderText": "I am skilled at:",
+    "HeaderText": "I am skilled at (and/or have knowledge programming) in:",
     "Skills":[
-        "Multiple Programming Languages (Lua, C#, Python, JavaScript)",
-        "This is just for testing!",
-        "JAOJDFPIOAWDpojiwa"
+        "C++",
+        "C#",
+        "CSS",
+        "HTML",
+        "JavaScript",
+        "Java",
+        "LUA"
     ]
 }

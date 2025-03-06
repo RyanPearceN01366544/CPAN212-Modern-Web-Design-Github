@@ -1,20 +1,35 @@
 :root {
-  background-color: rgb(49, 49, 49);
+  background-color: rgb(125, 125, 125);
+  --borderRad: 10px;
+  --titleBackgroundColor: blue;
+  --bodyColor: rgb(200, 200, 200);
+  --backgroundColor: rgb(150, 150, 150);
+  --foregroundColor: rgb(175, 175, 175);
+  --textColor: black;
 }
-
 .container {
-  background-color: rgb(35, 35, 35);
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  border-radius: var(--borderRad);
+  background-color: var(--bodyColor);
   padding: 1%;
   width: 98%;
+  max-width: 40rem;
 }
-
 .headerContainer {
-  display: flex;
-  width: 100%;
-  height: 10%;
-  background-color: rgb(100, 100, 100);
+  width: 97%;
+  height: 5%;
+  margin-left: auto;
+  margin-right: auto;
   justify-content: center;
   align-items: center;
+  color: var(--textColor);
+  background-color: var(--titleBackgroundColor);;
+  border-style: solid;
+  border-width: 8px;
+  border-color: rgb(50, 50, 50);
+  border-radius: var(--borderRad);
 }
 .title {
   font-size: 50px;
@@ -24,19 +39,37 @@
 }
 .sectionTitle {
   font-size: 30px;
+  margin-top: 0.75%;
+  margin-bottom: 0%;
 }
 
 .bodyContainer{
-  background-color: rgb(75, 75, 75);
-  margin-top: 0.25%;
+  background-color: var(--backgroundColor);
+  color: var(--textColor);
+  border-radius: var(--borderRad);
+  margin-top: 1%;
   padding: 0.25%;
   padding-left: 1%;
   padding-right: 1%;
+  padding-top: 1%;
+  padding-bottom: 1%;
 }
 
-.overviewCard {
-  background-color: orange;
+.largeCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  color: var(--textColor);
+  background-color: var(--foregroundColor);
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+  border-radius: var(--borderRad);
+  margin-top: 1%;
+  margin-bottom: 1%;
+  padding: 2%;
 }
+
 .dualCardContainer{
   display: flex;
   flex-direction: row;
@@ -45,10 +78,14 @@
 .dualCard {
   display:flex;
   flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  border-style: solid;
+  border-color: black;
+  border-width: 2px;
+  border-radius: var(--borderRad);
   padding: 2%;
   width: 45%;
-  background-color: blue;
-}
-.skillsCard {
-  background-color: purple;
+  color: var(--textColor);
+  background-color: var(--foregroundColor);
 }

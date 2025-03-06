@@ -5,19 +5,30 @@ import path from "path";
 import _ from "lodash";
 import { fileURLToPath } from "url"; // for file path
 
-const app = express();
-const PORT = process.env.PORT || 8000;
+const app = express(); // Init express.
+const PORT = process.env.PORT || 8000; // Set to 8000 
 const files__ = fileURLToPath(import.meta.url); // Takes me to index.js
 const dirName_ = path.dirname(files__); // Takes me to 'server' folder.
 const resumeDataPath = path.join(dirName_, "/data"); // Finally 'server/data'.
 
-app.use(cors());
-app.use(express.urlencoded({extended: true}));
-app.use(express.json());
+const corsOptions = {
+    origin: (origin, callback) => { // Using a callback after some research...
+        // Check if the requesting website is our websites or not. (!origin is for postman usage)
+        if (origin == "http://localhost:5173" || origin == "http://localhost:3000" || !origin)
+        {
+            callback(null, true); // Allow.
+        }
+        else // Otherwise...
+        {
+            callback(new Error("Not allowed! Cors restricted!")); // Disallow and send an error.
+        }
+    },
+    methods: ["GET"], // We only need to GET the data for the resume. POST+ not needed!
+    allowedHeaders: ["Content-Type"], // We only need content-type.
+}
 
-app.get("/", (req, res) => {
-    res.send("Welcome... But you are on the wrong page!");
-});
+app.use(cors(corsOptions)); // Set up cors so it's on all routes.
+app.use(express.json()); // Parses and looks through json files.
 
 // Potentially, I could have all of these in one file but that might be for later!
 app.get("/getOverview", (req, res) => { // Breaking it down but only for this one...
@@ -57,11 +68,11 @@ app.get("/getSkills", (req, res) => {
     })
 });
 
-app.listen(PORT, () => {
-    console.log(`http://localhost:${PORT}`);
+app.listen(PORT, () => { // Listen to the PORT and open the tunnel.
+    console.log(`http://localhost:${PORT}`); // Show that it is running.
 });
    
 // Catch-All Statement (Always keep under routing.)
-app.use("", (req, res) => {
+app.use("", (req, res) => { // Send an error in case of bad routing.
     res.status(404).send("Page not found");
 });

@@ -1,5 +1,7 @@
 {
     "Name": "Ryan Pearce",
     "Age": 24,
-    "Gender": "Male"
+    "Gender": "Male",
+    "Address": "48 Glenforest Rd.",
+    "Phone Number": "416-881-0420"
 }
