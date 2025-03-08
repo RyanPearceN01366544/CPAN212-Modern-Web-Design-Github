@@ -16,50 +16,83 @@ function App() {
   }, [])
 
   // -- Data Collection --
-  // I have previously done experiments on getting the blob data of a json file, read it then convert it
-  // the reason being it's less strain on the server if there would be multiple items.
-  // I'm certain there is a way I'm missing but for now, fs on the server is handling the data for me.
-  // So I am just collecting the data and using it instead.
-  const getEducation = async() => {
-    try{
-      const response = await fetch(`http://localhost:8000/getEdu`);
-      const data = await response.json();
-      setEducationData(data);
-    }
-    catch(err_){
-      console.log(err_);
-    }
+  // I have each of the functions below parse through an await function that returns the data from a promise.
+  // This will make it so the data that is obtained is read through the client and parsed.
+
+const getEducation = async() => {
+  try{
+    const response = await fetch(`http://localhost:8000/getEdu`);
+    const data = await response.blob();
+    const parsedData = await parseFile(data);
+    console.log("-- Education --");
+    console.log(parsedData);
+    setEducationData(parsedData);
   }
-  const getExperience = async() => {
-    try{
-      const response = await fetch(`http://localhost:8000/getExp`);
-      const data = await response.json();
-      setExperienceData(data);
-    }
-    catch(err_){
-      console.log(err_);
-    }
+  catch(err_){
+    console.log(err_);
   }
-  const getOverview = async() => {
-    try{
-      const response = await fetch(`http://localhost:8000/getOverview`);
-      const data = await response.json();
-      setOverviewData(data);
-    }
-    catch(err_){
-      console.log(err_);
-    }
+}
+const getExperience = async() => {
+  try{
+    const response = await fetch(`http://localhost:8000/getExp`);
+    const data = await response.blob();
+    const parsedData = await parseFile(data);
+    console.log("-- Experience --");
+    console.log(parsedData);
+    setExperienceData(parsedData);
   }
-  const getSkills = async() => {
-    try{
-      const response = await fetch(`http://localhost:8000/getSkills`);
-      const data = await response.json();
-      setSkillsData(data);
-    }
-    catch(err_){
-      console.log(err_);
-    }
+  catch(err_){
+    console.log(err_);
   }
+}
+const getOverview = async() => {
+  try{
+    const response = await fetch(`http://localhost:8000/getOverview`);
+    const data = await response.blob();
+    const parsedData = await parseFile(data);
+    console.log("-- Overview --");
+    console.log(parsedData);
+    setOverviewData(parsedData);
+  }
+  catch(err_){
+    console.log(err_);
+  }
+}
+const getSkills = async() => {
+  try{
+    const response = await fetch(`http://localhost:8000/getSkills`);
+    const data = await response.blob();
+    const parsedData = await parseFile(data);
+    console.log("-- Skills --");
+    console.log(parsedData);
+    setSkillsData(parsedData);
+  }
+  catch(err_){
+    console.log(err_);
+  }
+}
+
+async function parseFile(file_){
+  try {
+    const promise_ = await new Promise((resolve, reject) => {
+      const reader_ = new FileReader(); // Init file reader.
+      reader_.onload = function(data_){ // On load, give me the data I want.
+        try {
+          resolve(JSON.parse(data_.target.result));
+        }
+        catch (err_) {
+          console.log(err_);
+          reject(err_);
+        }
+      }
+      reader_.readAsText(file_); // Load the file to start the function above.
+    });
+    return promise_;
+  }
+  catch (err_) {
+    console.log(err_);
+  }
+}
 
   // -- Data Objects --
   // Used for placing inside of cards, it's simply just the data formated the way the data is suppose to be handled.
@@ -200,3 +233,46 @@ function App() {
 }
 
 export default App
+
+/* -- OBSOLUTE CODE -> LEFT IN FOR REVIEW IF WANTED. (ORIGINALLY WAS LOCATED AT LINE: 21)
+  const getEducation = async() => {
+    try{
+      const response = await fetch(`http://localhost:8000/getEdu`);
+      const data = await response.json();
+      setEducationData(data);
+    }
+    catch(err_){
+      console.log(err_);
+    }
+  }
+  const getExperience = async() => {
+    try{
+      const response = await fetch(`http://localhost:8000/getExp`);
+      const data = await response.json();
+      setExperienceData(data);
+    }
+    catch(err_){
+      console.log(err_);
+    }
+  }
+  const getOverview = async() => {
+    try{
+      const response = await fetch(`http://localhost:8000/getOverview`);
+      const data = await response.json();
+      setOverviewData(data);
+    }
+    catch(err_){
+      console.log(err_);
+    }
+  }
+  const getSkills = async() => {
+    try{
+      const response = await fetch(`http://localhost:8000/getSkills`);
+      const data = await response.json();
+      setSkillsData(data);
+    }
+    catch(err_){
+      console.log(err_);
+    }
+  }
+*/

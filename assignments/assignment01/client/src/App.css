@@ -1,7 +1,7 @@
 :root {
   background-color: rgb(125, 125, 125);
   --borderRad: 10px;
-  --titleBackgroundColor: blue;
+  --titleBackgroundColor: rgb(100, 100, 255);
   --bodyColor: rgb(200, 200, 200);
   --backgroundColor: rgb(150, 150, 150);
   --foregroundColor: rgb(175, 175, 175);
@@ -28,7 +28,7 @@
   background-color: var(--titleBackgroundColor);;
   border-style: solid;
   border-width: 8px;
-  border-color: rgb(50, 50, 50);
+  border-color: var(--backgroundColor);
   border-radius: var(--borderRad);
 }
 .title {
@@ -52,7 +52,6 @@
   padding-left: 1%;
   padding-right: 1%;
   padding-top: 1%;
-  padding-bottom: 1%;
 }
 
 .largeCard {

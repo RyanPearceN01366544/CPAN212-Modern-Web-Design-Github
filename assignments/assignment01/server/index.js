@@ -31,41 +31,23 @@ app.use(cors(corsOptions)); // Set up cors so it's on all routes.
 app.use(express.json()); // Parses and looks through json files.
 
 // Potentially, I could have all of these in one file but that might be for later!
-app.get("/getOverview", (req, res) => { // Breaking it down but only for this one...
-    // Read the file using FS. (Though not as optimal than sending the file all together [probably], I'm certain there is a way I can. I just couldn't get it to work properly.)
-    fs.readFile(path.join(resumeDataPath, "Overview.json"), function(err, data) {
-        if (err){ // If there is an error...
-            throw err // Throw an exception.
-        }
-        res.send(JSON.parse(data)); // Otherwise, send the data over as JSON.
-    })
+// Edit to Note: Considering I needed multiple sites for this assignment, I will leave each section as it's own file.
+// If I wasn't worried about it then I could have all the resume data be sent as one file and have it decompiled on the front-end.
+
+app.get("/getOverview", (req, res) => {
+    res.sendFile(path.join(resumeDataPath, "Overview.json"));
 });
 
 app.get("/getEdu", (req, res) => {
-    fs.readFile(path.join(resumeDataPath, "Education.json"), function(err, data) {
-        if (err){
-            throw err
-        }
-        res.send(JSON.parse(data));
-    })
+    res.sendFile(path.join(resumeDataPath, "Education.json"));
 });
 
 app.get("/getExp", (req, res) => {
-    fs.readFile(path.join(resumeDataPath, "Experiences.json"), function(err, data) {
-        if (err){
-            throw err
-        }
-        res.send(JSON.parse(data));
-    })
+    res.sendFile(path.join(resumeDataPath, "Experiences.json"));
 });
 
 app.get("/getSkills", (req, res) => {
-    fs.readFile(path.join(resumeDataPath, "Skills.json"), function(err, data) {
-        if (err){
-            throw err
-        }
-        res.send(JSON.parse(data));
-    })
+    res.sendFile(path.join(resumeDataPath, "Skills.json"));
 });
 
 app.listen(PORT, () => { // Listen to the PORT and open the tunnel.
@@ -76,3 +58,39 @@ app.listen(PORT, () => { // Listen to the PORT and open the tunnel.
 app.use("", (req, res) => { // Send an error in case of bad routing.
     res.status(404).send("Page not found");
 });
+
+/* -- OBSOLUTE CODE -> LEFT IN FOR REVIEW IF WANTED. (ORIGINALLY WAS LOCATED AT LINE: 36)
+app.get("/getOverview", (req, res) => { // Breaking it down but only for this one...
+    // Read the file using FS. (Though not as optimal than sending the file all together [probably], I'm certain there is a way I can. I just couldn't get it to work properly.)
+    fs.readFile(path.join(resumeDataPath, "Overview.json"), function(err, data) {
+        if (err){ // If there is an error...
+            throw err // Throw an exception.
+        }
+        res.send(JSON.parse(data)); // Otherwise, send the data over as JSON.
+    })
+});
+app.get("/getEdu", (req, res) => {
+    fs.readFile(path.join(resumeDataPath, "Education.json"), function(err, data) {
+        if (err){
+            throw err
+        }
+        res.send(JSON.parse(data));
+    })
+});
+app.get("/getExp", (req, res) => {
+    fs.readFile(path.join(resumeDataPath, "Experiences.json"), function(err, data) {
+        if (err){
+            throw err
+        }
+        res.send(JSON.parse(data));
+    })
+});
+app.get("/getSkills", (req, res) => {
+    fs.readFile(path.join(resumeDataPath, "Skills.json"), function(err, data) {
+        if (err){
+            throw err
+        }
+        res.send(JSON.parse(data));
+    })
+});
+*/
