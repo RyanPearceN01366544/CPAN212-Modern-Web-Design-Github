@@ -1,10 +1,10 @@
 :root {
-  background-color: rgb(125, 125, 125);
+  background-color: rgb(175, 175, 175);
   --borderRad: 10px;
-  --titleBackgroundColor: rgb(100, 100, 255);
-  --bodyColor: rgb(200, 200, 200);
-  --backgroundColor: rgb(150, 150, 150);
-  --foregroundColor: rgb(175, 175, 175);
+  --titleBackgroundColor: rgb(60, 60, 255);
+  --bodyColor: rgb(230, 230, 230);
+  --backgroundColor: rgb(175, 175, 175);
+  --foregroundColor: rgb(225, 225, 225);
   --textColor: black;
 }
 .container {
