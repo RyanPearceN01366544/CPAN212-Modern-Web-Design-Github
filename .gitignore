@@ -2,3 +2,4 @@ node_modules
 test*
 uploads
 !uploads/1738796560558null.png
+*.env

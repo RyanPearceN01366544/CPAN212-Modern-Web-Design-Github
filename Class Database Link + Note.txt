@@ -1,0 +1,12 @@
+mongodb+srv://LuckyNinja:8Xr6lYHPtvvFPT7G@cpan-212-class-cluster.6ors4.mongodb.net/
+
+
+db["<TABLE NAME>"].find(
+    {} // -> Filters
+    {} // -> Add/Remove Details
+)
+
+db["<TABLE NAME>"].function - CRUD(
+    {FILTER Object}
+    {OPTIONS/Controller}
+)

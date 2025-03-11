@@ -1,6 +1,5 @@
 import express from "express";
 import cors from "cors";
-import fs from "fs";
 import path from "path";
 import _ from "lodash";
 import { fileURLToPath } from "url"; // for file path
