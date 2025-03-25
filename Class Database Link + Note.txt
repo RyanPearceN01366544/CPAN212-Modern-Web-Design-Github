@@ -10,3 +10,78 @@ db["<TABLE NAME>"].function - CRUD(
     {FILTER Object}
     {OPTIONS/Controller}
 )
+
+-- NOTE --
+Equal to: $eq
+Not equal to: $ne
+Greater than or equal to: $gte
+Greater than: $gt
+Lesser than or equal to: $lte
+Lesser than: $lt
+
+-- Comparison
+db.laptops.find({price: {$eq: 999.99}})
+db.laptops.find({price: {$ne: 1299.99}})
+db.laptops.find({price: {$gt: 1500}})
+db.laptops.find({price: {$lte: 1099.99}})
+-- Logical
+db.laptops.find({
+    $or: [
+        {price: {$lt: 1000}},  // Check for this or...
+        {stock: {$gt: 10}} // This.
+    ]
+})
+
+db.laptops.find({
+    $and: [
+        {price: {$lt: 1000}},  // Check for this or...
+        {stock: {$gt: 10}} // This.
+    ]
+})
+
+db.laptops.find({
+    price: {
+        $not: {$eq: 999.99}
+    }
+})
+
+// -- Element
+db.laptops.find(
+    {
+        description: {$exists: true}
+    }
+)
+
+db.laptops.find(
+    {
+        reviews: {$exists: false}
+    }
+)
+
+db.laptops.find(
+    {
+        genres: "Gaming"
+    }
+)
+
+// -- Array
+db.laptops.find(
+    {
+        genres: {$in: ["Gaming", "Business"]}
+    }
+)
+// -- Text Search
+db.laptops.createIndex({ brand: "text", model: "text", processor: "text", description: "text" })
+db.laptops.find({
+    $text: {$search: "performance"}
+})
+// -- Array Update
+db.laptops.updateOne(
+    { model: "MacBook Air" },
+    {$push: {reviews: {user:"John Doe", rating: 4, comments: "Cool stuff!"}}}
+)
+
+db.laptops.updateOne(
+   { model: "MacBook Air" },
+   { $push: { reviews: { user: "John Doe", rating: 4, comments: "Cool stuff!" } } }
+);
