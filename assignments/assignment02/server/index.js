@@ -6,10 +6,8 @@ import recipe_router from "./routers/recipe_router.js";
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 8000;
-
-app.get("/", (req, res) => {
-    res.send("Temporary.");
-});
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 app.use("/recipe/", recipe_router);
 
